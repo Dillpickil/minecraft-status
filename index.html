@@ -1,1 +1,73 @@
-Minecraft SMP Test
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: #202225;
+}
+ 
+.card {
+background: #2f3136;
+color: white;
+padding: 15px;
+border-radius: 10px;
+text-align: center;
+width: 250px;
+}
+ 
+.online {
+color: #57f287;
+font-weight: bold;
+}
+ 
+.offline {
+color: #ed4245;
+font-weight: bold;
+}
+ 
+.players {
+font-size: 20px;
+margin-top: 5px;
+}
+</style>
+</head>
+<body>
+ 
+<div class="card">
+<div id="status">Loading...</div>
+</div>
+ 
+<script>
+async function updateServer() {
+try {
+const res = await fetch('https://api.mcsrvstat.us/bedrock/2/193.176.129.81');
+const data = await res.json();
+ 
+const status = document.getElementById('status');
+ 
+if (data.online) {
+status.innerHTML = `
+<div class="online">🟢 SERVER ONLINE</div>
+<div class="players">👥 ${data.players.online}/${data.players.max}</div>
+<div>193.176.129.81</div>
+`;
+} else {
+status.innerHTML = `
+<div class="offline">🔴 SERVER OFFLINE</div>
+`;
+}
+} catch {
+document.getElementById('status').innerHTML =
+'<div class="offline">🔴 UNREACHABLE</div>';
+}
+}
+ 
+updateServer();
+setInterval(updateServer, 30000);
+</script>
+ 
+</body>
+</html>
