@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 26.2.5.1 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { margin-bottom: 0.1in; line-height: 115%; background: transparent }
+		pre { background: transparent }
+		pre.western { font-family: "Liberation Mono", monospace; font-size: 10pt }
+		pre.cjk { font-family: "NSimSun", monospace; font-size: 10pt }
+		pre.ctl { font-family: "Liberation Mono", monospace; font-size: 10pt }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre class="western">HTML
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;style&gt;
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: #202225;
+}
+&nbsp;
+.card {
+background: #2f3136;
+color: white;
+padding: 15px;
+border-radius: 10px;
+text-align: center;
+width: 250px;
+}
+&nbsp;
+.online {
+color: #57f287;
+font-weight: bold;
+}
+&nbsp;
+.offline {
+color: #ed4245;
+font-weight: bold;
+}
+&nbsp;
+.players {
+font-size: 20px;
+margin-top: 5px;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&nbsp;
+&lt;div class=&quot;card&quot;&gt;
+&lt;div id=&quot;status&quot;&gt;Loading...&lt;/div&gt;
+&lt;/div&gt;
+&nbsp;
+&lt;script&gt;
+async function updateServer() {
+try {
+const res = await fetch('https://api.mcsrvstat.us/bedrock/2/193.176.129.81');
+const data = await res.json();
+&nbsp;
+const status = document.getElementById('status');
+&nbsp;
+if (data.online) {
+status.innerHTML = `
+&lt;div class=&quot;online&quot;&gt;🟢 SERVER ONLINE&lt;/div&gt;
+&lt;div class=&quot;players&quot;&gt;👥 ${data.players.online}/${data.players.max}&lt;/div&gt;
+&lt;div&gt;193.176.129.81&lt;/div&gt;
+`;
+} else {
+status.innerHTML = `
+&lt;div class=&quot;offline&quot;&gt;🔴 SERVER OFFLINE&lt;/div&gt;
+`;
+}
+} catch {
+document.getElementById('status').innerHTML =
+'&lt;div class=&quot;offline&quot;&gt;🔴 UNREACHABLE&lt;/div&gt;';
+}
+}
+&nbsp;
+updateServer();
+setInterval(updateServer, 30000);
+&lt;/script&gt;
+&nbsp;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</body>
+</html>
